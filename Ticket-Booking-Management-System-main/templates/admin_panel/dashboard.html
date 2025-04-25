@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<section>
+    <h2>Shows Management</h2>
+    <a href="{% url 'add_show' %}" class="btn">Add New Show</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Venue</th>
+                <th>Seats</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for show in shows %}
+            <tr>
+                <td>{{ show.title }}</td>
+                <td>{{ show.date }}</td>
+                <td>{{ show.venue }}</td>
+                <td>{{ show.total_seats }}</td>
+                <td>₹{{ show.price_per_seat }}</td>
+                <td>
+                    <a href="{% url 'edit_show' show.pk %}">Edit</a>
+                    <form method="post" action="{% url 'delete_show' show.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No shows available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h2>All Bookings</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Show</th>
+                <th>Seats</th>
+                <th>Total</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.user.email }}</td>
+                <td>{{ booking.show.title }}</td>
+                <td>{{ booking.seats }}</td>
+                <td>₹{{ booking.total_price }}</td>
+                <td>{{ booking.booking_date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No bookings yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

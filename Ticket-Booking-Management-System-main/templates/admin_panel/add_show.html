@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Add New Show</h2>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label>Title:</label>
+        <input type="text" name="title" value="{{ data.title }}" required>
+        {% if errors.title %}<span style="color:red">{{ errors.title }}</span>{% endif %}
+    </div>
+    <div>
+        <label>Description:</label>
+        <textarea name="description">{{ data.description }}</textarea>
+    </div>
+    <div>
+        <label>Date:</label>
+        <input type="datetime-local" name="date" value="{{ data.date }}" required>
+        {% if errors.date %}<span style="color:red">{{ errors.date }}</span>{% endif %}
+    </div>
+    <div>
+        <label>Duration (minutes):</label>
+        <input type="number" name="duration" value="{{ data.duration }}" min="1">
+    </div>
+    <div>
+        <label>Venue:</label>
+        <input type="text" name="venue" value="{{ data.venue }}" required>
+    </div>
+    <div>
+        <label>Total Seats:</label>
+        <input type="number" name="total_seats" value="{{ data.total_seats }}" min="1" required>
+        {% if errors.total_seats %}<span style="color:red">{{ errors.total_seats }}</span>{% endif %}
+    </div>
+    <div>
+        <label>Price per Seat (₹):</label>
+        <input type="number" name="price_per_seat" step="0.01" value="{{ data.price_per_seat }}" min="0" required>
+        {% if errors.price_per_seat %}<span style="color:red">{{ errors.price_per_seat }}</span>{% endif %}
+    </div>
+    <button type="submit">Add Show</button>
+</form>
+{% endblock %}

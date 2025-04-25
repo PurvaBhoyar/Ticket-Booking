@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Register</h2>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ data.email }}" required>
+        {% if errors.email %}<span style="color:red">{{ errors.email }}</span>{% endif %}
+    </div>
+    <div>
+        <label>Username:</label>
+        <input type="text" name="username" value="{{ data.username }}" required>
+        {% if errors.username %}<span style="color:red">{{ errors.username }}</span>{% endif %}
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" name="password1" required>
+        {% if errors.password1 %}<span style="color:red">{{ errors.password1 }}</span>{% endif %}
+    </div>
+    <div>
+        <label>Confirm Password:</label>
+        <input type="password" name="password2" required>
+        {% if errors.password2 %}<span style="color:red">{{ errors.password2 }}</span>{% endif %}
+    </div>
+    <button type="submit">Register</button>
+</form>
+<p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+{% endblock %}

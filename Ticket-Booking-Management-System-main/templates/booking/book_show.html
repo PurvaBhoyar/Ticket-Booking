@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Book {{ show.title }}</h2>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label>Number of Seats (Available: {{ show.total_seats }}):</label>
+        <input type="number" name="seats" min="1" max="{{ show.total_seats }}" required>
+        {% if errors.seats %}<span style="color:red">{{ errors.seats }}</span>{% endif %}
+    </div>
+    <p>Price per seat: ₹{{ show.price_per_seat }}</p>
+    <button type="submit">Confirm Booking</button>
+</form>
+{% endblock %}

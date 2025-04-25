@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="display-4">Upcoming Shows</h1>
+        <hr class="my-4">
+    </div>
+</div>
+
+<div class="row">
+    {% for show in shows %}
+    <div class="col-md-4 mb-4">
+        <div class="card show-card h-100">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">{{ show.title }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text text-muted">{{ show.description|truncatewords:20 }}</p>
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item">
+                        <i class="far fa-calendar-alt me-2"></i>
+                        <strong>Date:</strong> {{ show.date|date:"F j, Y, g:i a" }}
+                    </li>
+                    <li class="list-group-item">
+                        <i class="far fa-clock me-2"></i>
+                        <strong>Duration:</strong> {{ show.duration }}
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        <strong>Venue:</strong> {{ show.venue }}
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-chair me-2"></i>
+                        <strong>Available Seats:</strong> {{ show.total_seats }}
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-tag me-2"></i>
+                        <strong>Price:</strong> ₹{{ show.price_per_seat }}
+                    </li>
+                </ul>
+                <a href="{% url 'show_detail' show.pk %}" class="btn btn-primary w-100">
+                    <i class="fas fa-eye me-2"></i>View Details
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            No shows available. Check back later!
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

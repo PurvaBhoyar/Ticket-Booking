@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="show-detail">
+    <h2>{{ show.title }}</h2>
+    <p><strong>Description:</strong> {{ show.description }}</p>
+    <p><strong>Date:</strong> {{ show.date }}</p>
+    <p><strong>Duration:</strong> {{ show.duration }}</p>
+    <p><strong>Venue:</strong> {{ show.venue }}</p>
+    <p><strong>Seats Available:</strong> {{ show.total_seats }}</p>
+    <p><strong>Price per seat:</strong> ₹{{ show.price_per_seat }}</p>
+    
+    {% if user.is_authenticated %}
+        {% if show.total_seats > 0 %}
+            <a href="{% url 'book_show' show.pk %}" class="btn">Book Now</a>
+        {% else %}
+            <p class="text-danger">Sold Out!</p>
+        {% endif %}
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">login</a> to book tickets.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit {{ show.title }}</h2>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label>Title:</label>
+        <input type="text" name="title" value="{{ show.title }}" required>
+    </div>
+    <div>
+        <label>Description:</label>
+        <textarea name="description">{{ show.description }}</textarea>
+    </div>
+    <div>
+        <label>Date:</label>
+        <input type="datetime-local" name="date" value="{{ show.date|date:'Y-m-d\TH:i' }}" required>
+    </div>
+    <div>
+        <label>Duration (minutes):</label>
+        <input type="number" name="duration" value="{{ show.duration.total_seconds|div:60 }}" min="1">
+    </div>
+    <div>
+        <label>Venue:</label>
+        <input type="text" name="venue" value="{{ show.venue }}" required>
+    </div>
+    <div>
+        <label>Total Seats:</label>
+        <input type="number" name="total_seats" value="{{ show.total_seats }}" min="1" required>
+        {% if errors.total_seats %}<span style="color:red">{{ errors.total_seats }}</span>{% endif %}
+    </div>
+    <div>
+        <label>Price per Seat (₹):</label>
+        <input type="number" name="price_per_seat" step="0.01" value="{{ show.price_per_seat }}" min="0" required>
+        {% if errors.price_per_seat %}<span style="color:red">{{ errors.price_per_seat }}</span>{% endif %}
+    </div>
+    <button type="submit">Update Show</button>
+</form>
+{% endblock %}
